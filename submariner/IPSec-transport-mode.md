@@ -75,8 +75,8 @@ data:
 On the invocation of the `NewLibreswan()` function the configuration params
 are read and and establish if the request is for a tunnel or transport based
 connection. If the connection is transport based - then the `libreswan` driver
-will need to also drive the VXLAN or IPTun Cable Driver as well as the setup, and
-teardown of the IPSec connections. The existing VXLAN/IPTun Configuration will be the
+will need to also drive the VXLAN Cable Driver as well as the setup, and
+teardown of the IPSec connections. The existing VXLAN configuration will be the
 same.
 
 An example configuration (that would need to be done by the driver) for a VXLAN over
@@ -100,23 +100,6 @@ IPSec Transport connection between two Submariner clusters gateways cluster1-wor
 [root@cluster2-worker]# ipsec whack --route --name submariner-cable-cluster1-172-18-0-11-1
 [root@cluster2-worker]# ipsec whack --initiate --asynchronous --name submariner-cable-cluster1-172-18-0-11-0
 [root@cluster2-worker]# ipsec whack --initiate --asynchronous --name submariner-cable-cluster1-172-18-0-11-1
-```
-<!-- markdownlint-enable line-length -->
-
-An example configuration for an IPinIP over IPSec Transport connection between two Submariner
-clusters gateways cluster1-worker (172.18.0.11) and cluster2-worker (172.18.0.9):
-
-<!-- markdownlint-disable line-length -->
-```console
-[root@cluster1-worker]# ipsec whack --psk --encrypt --name submariner-cable-cluster2-172-18-0-9-0 --host 172.18.0.11 --clientproto ipv4 --to --host 172.18.0.9 --clientproto ipv4 
-[root@cluster1-worker]# ipsec whack --route --name submariner-cable-cluster2-172-18-0-9-0
-[root@cluster1-worker]# ipsec whack --initiate --asynchronous --name submariner-cable-cluster2-172-18-0-9-0
-```
-
-```console
-[root@cluster2-worker]# ipsec whack --psk --encrypt --name submariner-cable-cluster1-172-18-0-11- --host 172.18.0.9 --clientproto ipv4 --to --host 172.18.0.11 --clientproto ipv4 
-[root@cluster2-worker]# ipsec whack --route --name submariner-cable-cluster1-172-18-0-11-0
-[root@cluster2-worker]# ipsec whack --initiate --asynchronous --name submariner-cable-cluster1-172-18-0-11-0
 ```
 <!-- markdownlint-enable line-length -->
 

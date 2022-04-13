@@ -107,7 +107,7 @@ IPSec Transport connection between two Submariner clusters gateways cluster1-wor
 ```
 <!-- markdownlint-enable line-length -->
 
-> **_NOTE:_** The clientprotoport parameter is used to specify the Port Selectors (filters) to be used on this connection. 
+> **_NOTE:_** The clientprotoport parameter is used to specify the Port Selectors (filters) to be used on this connection.
 > The general form is protocol/port.
 
 The resulting topology is shown below

@@ -83,11 +83,9 @@ An example configuration (that would need to be done by the driver) for a VXLAN 
 IPSec Transport connection between two Submariner clusters gateways cluster1-worker
 (172.18.0.8) and cluster2-worker (172.18.0.7):
 
-> **_NOTE 1:_** For VXLAN combined with transport mode it is recommended to use the default VXLAN port (4789) rather than port 4500.
->
-> **_NOTE 2:_** This section assumes that Submariner was deployed with the VXLAN cable driver and adjusted the nattport to 4789
->
-> **_NOTE 3:_** The IPSec secret using the Submariner PSK needs to be configured in the usual way.
+> **_NOTE 1:_** This section assumes that Submariner was deployed with the VXLAN cable driver and adjusted the nattport to 4789
+> To use the default Submariner nattport 4500 the argument to clientprotoport needs to be adjusted to udp/4500
+> **_NOTE 2:_** The IPSec secret using the Submariner PSK needs to be configured in the usual way.
 
 <!-- markdownlint-disable line-length -->
 ```console

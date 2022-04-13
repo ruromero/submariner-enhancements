@@ -73,7 +73,7 @@ data:
 ```
 
 On the invocation of the `NewLibreswan()` function the configuration params
-are read and and establish if the request is for a tunnel or transport based
+are read to establish if the request is for a tunnel or transport based
 connection. If the connection is transport based - then the `libreswan` driver
 will need to also drive the VXLAN Cable Driver as well as the setup, and
 teardown of the IPSec connections. The existing VXLAN configuration will be the
@@ -81,26 +81,36 @@ same.
 
 An example configuration (that would need to be done by the driver) for a VXLAN over
 IPSec Transport connection between two Submariner clusters gateways cluster1-worker
-(172.18.0.11) and cluster2-worker (172.18.0.9):
+(172.18.0.8) and cluster2-worker (172.18.0.7):
+
+> **_NOTE 1:_** For VXLAN combined with transport mode it is recommended to use the default VXLAN port (4789) rather than port 4500.
+>
+> **_NOTE 2:_** This section assumes that Submariner was deployed with the VXLAN cable driver and adjusted the nattport to 4789
+>
+> **_NOTE 3:_** The IPSec secret using the Submariner PSK needs to be configured in the usual way.
 
 <!-- markdownlint-disable line-length -->
 ```console
-[root@cluster1-worker]# ipsec whack --psk --encrypt --name submariner-cable-cluster2-172-18-0-9-0 --host 172.18.0.11 --clientproto udp/vxlan --to --host 172.18.0.9 --clientproto udp 
-[root@cluster1-worker]# ipsec whack --psk --encrypt  --name submariner-cable-cluster2-172-18-0-9-1 --host 172.18.0.11 --clientproto udp --to --host 172.18.0.9 --clientproto udp/vxlan
-[root@cluster1-worker]# ipsec whack --route --name submariner-cable-cluster2-172-18-0-9-0
-[root@cluster1-worker]# ipsec whack --route --name submariner-cable-cluster2-172-18-0-9-1
-[root@cluster1-worker]# ipsec whack --initiate --asynchronous --name submariner-cable-cluster2-172-18-0-9-0
-[root@cluster1-worker]# ipsec whack --initiate --asynchronous --name submariner-cable-cluster2-172-18-0-9-1
+[root@cluster1-worker]# ipsec whack --psk --encrypt --name submariner-cable-cluster2-172-18-0-7-0 --host 172.18.0.8 --clientprotoport udp/vxlan --to --host 172.18.0.7 --clientprotoport udp 
+[root@cluster1-worker]# ipsec whack --psk --encrypt  --name submariner-cable-cluster2-172-18-0-7-1 --host 172.18.0.8 --clientprotoport udp --to --host 172.18.0.7 --clientprotoport udp/vxlan
+[root@cluster1-worker]# ipsec whack --route --name submariner-cable-cluster2-172-18-0-7-0
+[root@cluster1-worker]# ipsec whack --route --name submariner-cable-cluster2-172-18-0-7-1
+[root@cluster1-worker]# ipsec whack --initiate --asynchronous --name submariner-cable-cluster2-172-18-0-7-0
+[root@cluster1-worker]# ipsec whack --initiate --asynchronous --name submariner-cable-cluster2-172-18-0-7-1
 ```
 
 ```console
-[root@cluster2-worker]# ipsec whack --psk --encrypt --name submariner-cable-cluster1-172-18-0-11-0 --host 172.18.0.9 --clientproto udp/vxlan --to --host 172.18.0.11 --clientproto udp 
-[root@cluster2-worker]# ipsec whack --psk --encrypt --name submariner-cable-cluster1-172-18-0-11-1 --host 172.18.0.9 --clientproto udp --to --host 172.18.0.11 --clientproto udp/vxlan
-[root@cluster2-worker]# ipsec whack --route --name submariner-cable-cluster1-172-18-0-11-0
-[root@cluster2-worker]# ipsec whack --route --name submariner-cable-cluster1-172-18-0-11-1
-[root@cluster2-worker]# ipsec whack --initiate --asynchronous --name submariner-cable-cluster1-172-18-0-11-0
-[root@cluster2-worker]# ipsec whack --initiate --asynchronous --name submariner-cable-cluster1-172-18-0-11-1
+[root@cluster2-worker]# ipsec whack --psk --encrypt --name submariner-cable-cluster1-172-18-0-8-0 --host 172.18.0.7 --clientprotoport udp/vxlan --to --host 172.18.0.8 --clientprotoport udp 
+[root@cluster2-worker]# ipsec whack --psk --encrypt --name submariner-cable-cluster1-172-18-0-8-1 --host 172.18.0.7 --clientprotoport udp --to --host 172.18.0.8 --clientprotoport udp/vxlan
+[root@cluster2-worker]# ipsec whack --route --name submariner-cable-cluster1-172-18-0-8-0
+[root@cluster2-worker]# ipsec whack --route --name submariner-cable-cluster1-172-18-0-8-1
+[root@cluster2-worker]# ipsec whack --initiate --asynchronous --name submariner-cable-cluster1-172-18-0-8-0
+[root@cluster2-worker]# ipsec whack --initiate --asynchronous --name submariner-cable-cluster1-172-18-0-8-1
 ```
 <!-- markdownlint-enable line-length -->
 
-> **_NOTE:_** For VXLAN in transport mode it is recommended to use the default VXLAN port rather than port 4500.
+> **_NOTE:_** The clientprotoport parameter is used to specify the Port Selectors (filters) to be used on this connection. 
+> The general form is protocol/port.
+
+The resulting topology is shown below
+![Submariner VXLAN over IPSec transport mode cable driver view](./images/vxlan-over-ipsec-transport.png)

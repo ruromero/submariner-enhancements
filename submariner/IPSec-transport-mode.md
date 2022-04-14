@@ -1,11 +1,11 @@
 
-# Cable Driver Enhancement - IPSec Transport Mode
+# Cable Driver Enhancement - Overlay over IPSec Transport Mode
 
 ## Summary
 
 Submariner today supports three cable drivers: VXLAN, IPSec (tunnel mode) and WireGuard. The
-goal of this proposal is to outline the enhancements needed for the Submariner
-Cable Driver to enable IPSec in transport mode.
+goal of this proposal is to outline the enhancements needed for the Submariner Cable Driver to
+enable Overlay-over-IPSec in transport mode.
 
 For Overlay-over-IPSec in transport mode with further configuration, the benefits fall into the
 following categories:

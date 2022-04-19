@@ -112,3 +112,21 @@ IPSec Transport connection between two Submariner clusters gateways cluster1-wor
 
 The resulting topology is shown below
 ![Submariner VXLAN over IPSec transport mode cable driver view](./images/vxlan-over-ipsec-transport.png)
+
+### Hardware offload enablement
+
+_"libreswan as of version 3.23 supports the new cryptographic hardware offload as implemented by Linux 4.11 and up using the
+native (XFRM) IPsec stack. Libreswan autodetects supports for any hardware supporting this crypto offload API"_ [1].
+
+The [NICs](https://libreswan.org/wiki/Cryptographic_Acceleration#Supported_hardware) that support Hardware offload capabilities
+for Libreswan are pretty standard and available in all cloud environments. Submariner encourages the 'selection' of one these
+NICs for a node where one intends to deploy the Submariner gateway and leverage the use of labels to schedule the pod to the
+appropriate node: a node label for the node that has the right NIC and for the GW pod to use a label selector (for that node label)
+to ensure that the gateway lands on the right platform. Then rely on Libreswan to autodetect the HW features and take advantage of them.
+
+> **_NOTE:_** The IPSec cable driver will need to be modified to run `ipsec _stackmanager start` to load the appropriate
+> hardware offload modules.
+
+## References
+
+[1] [Cryptographic_Acceleration](https://libreswan.org/wiki/Cryptographic_Acceleration)

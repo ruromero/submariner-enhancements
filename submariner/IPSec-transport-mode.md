@@ -89,8 +89,8 @@ IPSec Transport connection between two Submariner clusters gateways cluster1-wor
 
 <!-- markdownlint-disable line-length -->
 ```console
-[root@cluster1-worker]# ipsec whack --psk --encrypt --forceencaps --name submariner-cable-cluster2-172-18-0-7-0 --host 172.18.0.8 --clientprotoport udp/vxlan --to --host 172.18.0.7 --clientprotoport udp
-[root@cluster1-worker]# ipsec whack --psk --encrypt --forceencaps --name submariner-cable-cluster2-172-18-0-7-1 --host 172.18.0.8 --clientprotoport udp --to --host 172.18.0.7 --clientprotoport udp/vxlan
+[root@cluster1-worker]# ipsec whack --psk --encrypt --forceencaps --name submariner-cable-cluster2-172-18-0-7-0 --host 172.18.0.8 --clientprotoport udp/vxlan --ikeport 4500 --to --host 172.18.0.7 --clientprotoport udp --ikeport 4500
+[root@cluster1-worker]# ipsec whack --psk --encrypt --forceencaps --name submariner-cable-cluster2-172-18-0-7-1 --host 172.18.0.8 --clientprotoport udp --ikeport 4500 --to --host 172.18.0.7 --clientprotoport udp/vxlan --ikeport 4500
 [root@cluster1-worker]# ipsec whack --route --name submariner-cable-cluster2-172-18-0-7-0
 [root@cluster1-worker]# ipsec whack --route --name submariner-cable-cluster2-172-18-0-7-1
 [root@cluster1-worker]# ipsec whack --initiate --asynchronous --name submariner-cable-cluster2-172-18-0-7-0
@@ -98,8 +98,8 @@ IPSec Transport connection between two Submariner clusters gateways cluster1-wor
 ```
 
 ```console
-[root@cluster2-worker]# ipsec whack --psk --encrypt --forceencaps --name submariner-cable-cluster1-172-18-0-8-0 --host 172.18.0.7 --clientprotoport udp/vxlan --to --host 172.18.0.8 --clientprotoport udp
-[root@cluster2-worker]# ipsec whack --psk --encrypt --forceencaps --name submariner-cable-cluster1-172-18-0-8-1 --host 172.18.0.7 --clientprotoport udp --to --host 172.18.0.8 --clientprotoport udp/vxlan
+[root@cluster2-worker]# ipsec whack --psk --encrypt --forceencaps --name submariner-cable-cluster1-172-18-0-8-0 --host 172.18.0.7 --clientprotoport udp/vxlan --ikeport 4500 --to --host 172.18.0.8 --clientprotoport udp --ikeport 4500
+[root@cluster2-worker]# ipsec whack --psk --encrypt --forceencaps --name submariner-cable-cluster1-172-18-0-8-1 --host 172.18.0.7 --clientprotoport udp --ikeport 4500 --to --host 172.18.0.8 --clientprotoport udp/vxlan --ikeport 4500
 [root@cluster2-worker]# ipsec whack --route --name submariner-cable-cluster1-172-18-0-8-0
 [root@cluster2-worker]# ipsec whack --route --name submariner-cable-cluster1-172-18-0-8-1
 [root@cluster2-worker]# ipsec whack --initiate --asynchronous --name submariner-cable-cluster1-172-18-0-8-0

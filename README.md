@@ -5,4 +5,4 @@
 [![Periodic](https://github.com/submariner-io/enhancements/workflows/Periodic/badge.svg)](https://github.com/submariner-io/enhancements/actions?query=workflow%3APeriodic)
 <!-- markdownlint-enable line-length -->
 
-This repository contains enhancement proposals for submariner-io projects.
+This repository contains enhancement proposals for Submariner projects.
